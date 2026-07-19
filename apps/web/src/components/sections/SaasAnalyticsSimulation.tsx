@@ -37,12 +37,12 @@ const workspaces: Workspace[] = [
   {
     id: "production",
     label: "Production",
-    description: "Throughput, process stability, and parameter-level exception monitoring.",
-    accent: "Operational intelligence",
+    description: "Output, stable work, and unusual values.",
+    accent: "Production view",
     metrics: [
-      { label: "Packets monitored", live: "18,420", forecast: "19,080", delta: "+3.6%" },
+      { label: "Items tracked", live: "18,420", forecast: "19,080", delta: "+3.6%" },
       { label: "Stable output", live: "91.8%", forecast: "93.1%", delta: "+1.3 pts" },
-      { label: "Report latency", live: "8 sec", forecast: "5 sec", delta: "-37%" },
+      { label: "Report time", live: "8 sec", forecast: "5 sec", delta: "-37%" },
     ],
     liveTrend: [42, 49, 47, 58, 55, 66, 64, 71, 69, 78, 82, 86],
     forecastTrend: [44, 51, 53, 59, 61, 67, 70, 75, 78, 83, 88, 92],
@@ -56,10 +56,10 @@ const workspaces: Workspace[] = [
   {
     id: "inventory",
     label: "Inventory",
-    description: "Movement, ageing, overstock exposure, and action-oriented prioritisation.",
-    accent: "Inventory control",
+    description: "Stock movement, age, risk, and next actions.",
+    accent: "Stock view",
     metrics: [
-      { label: "Active inventory", live: "₹4.8 Cr", forecast: "₹4.5 Cr", delta: "-6.2%" },
+      { label: "Active stock", live: "₹4.8 Cr", forecast: "₹4.5 Cr", delta: "-6.2%" },
       { label: "Overstock risk", live: "12.4%", forecast: "8.9%", delta: "-3.5 pts" },
       { label: "Refresh cycle", live: "Live", forecast: "Live", delta: "SQL driven" },
     ],
@@ -75,11 +75,11 @@ const workspaces: Workspace[] = [
   {
     id: "sales",
     label: "Sales",
-    description: "Pricing response, conversion movement, segment mix, and management reporting.",
-    accent: "Commercial analytics",
+    description: "Price, sales, customer groups, and reports.",
+    accent: "Sales view",
     metrics: [
       { label: "Conversion", live: "24.7%", forecast: "27.2%", delta: "+2.5 pts" },
-      { label: "Realisation", live: "₹38.4K", forecast: "₹40.1K", delta: "+4.4%" },
+      { label: "Average value", live: "₹38.4K", forecast: "₹40.1K", delta: "+4.4%" },
       { label: "Reports automated", live: "284", forecast: "300", delta: "daily" },
     ],
     liveTrend: [38, 43, 41, 49, 54, 51, 59, 63, 61, 70, 73, 77],
@@ -125,13 +125,13 @@ export function SaasAnalyticsSimulation() {
   const animationKey = `${workspaceId}-${scenario}`;
 
   return (
-    <section className="saas-simulation-section px-5 py-28 lg:px-8 lg:py-36">
+    <section className="saas-simulation-section px-5 py-16 lg:px-8 lg:py-20">
       <div className="mx-auto grid max-w-7xl gap-12 xl:grid-cols-[0.72fr_1.28fr] xl:items-center">
         <Reveal>
           <SectionHeading
-            eyebrow="Interactive SaaS reporting"
-            title="Operational data shaped into a decision workflow."
-            description="Explore validated production, inventory, and sales reporting in one focused workspace."
+            eyebrow="Interactive report"
+            title="Production data in one clear view."
+            description="Explore checked production, inventory, and sales data."
           />
         </Reveal>
 
@@ -145,7 +145,7 @@ export function SaasAnalyticsSimulation() {
 
             <div className="saas-window__toolbar">
               <div>
-                <p>Decision workspace</p>
+                <p>Report workspace</p>
                 <span>{workspace.accent}</span>
               </div>
               <button
@@ -203,8 +203,8 @@ export function SaasAnalyticsSimulation() {
                   <article className="saas-chart-card">
                     <div className="saas-card-heading">
                       <div>
-                        <span>Trend monitor</span>
-                        <strong>{workspace.label} performance</strong>
+                        <span>Trend</span>
+                        <strong>{workspace.label} result</strong>
                       </div>
                       <span className="saas-card-heading__mode">{scenario}</span>
                     </div>
@@ -253,8 +253,8 @@ export function SaasAnalyticsSimulation() {
                   <article className="saas-distribution-card">
                     <div className="saas-card-heading">
                       <div>
-                        <span>Distribution</span>
-                        <strong>Operational mix</strong>
+                        <span>Breakdown</span>
+                        <strong>Current mix</strong>
                       </div>
                     </div>
                     <div className="saas-bars">

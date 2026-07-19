@@ -10,14 +10,16 @@ export function PublicLayout() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
+    window.requestAnimationFrame(() => document.getElementById("main-content")?.focus({ preventScroll: true }));
   }, [pathname]);
 
   return (
     <div className="min-h-screen overflow-clip">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <BackgroundScene />
       <ScrollProgress />
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Outlet />
       </main>
       <Footer />

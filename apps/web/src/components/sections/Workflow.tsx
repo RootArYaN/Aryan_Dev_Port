@@ -10,13 +10,13 @@ export function Workflow() {
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section ref={sectionRef} className="px-5 py-28 lg:px-8 lg:py-36">
+    <section ref={sectionRef} className="px-5 py-16 lg:px-8 lg:py-20">
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-24">
         <Reveal>
           <SectionHeading
             eyebrow="Working method"
-            title="A simple path from operational friction to trusted software."
-            description="The workflow is intentionally understandable: solve the actual decision, validate the logic, then automate what deserves automation."
+            title="A simple path from problem to working tool."
+            description="Solve the real problem, check the result, then automate repeat work."
           />
         </Reveal>
 

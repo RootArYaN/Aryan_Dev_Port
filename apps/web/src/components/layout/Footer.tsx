@@ -1,18 +1,19 @@
 import { ArrowUpRight, GitBranch, ExternalLink, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { profile } from "@/data/profile";
+import { trackEvent } from "@/lib/analytics";
 
 export function Footer() {
   return (
-    <footer className="px-5 pb-8 pt-20 lg:px-8">
+    <footer className="px-5 pb-8 pt-12 lg:px-8 lg:pt-16">
       <div className="mx-auto max-w-7xl overflow-hidden border-t border-white/[0.07]">
         <div className="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1.2fr_0.8fr] lg:p-14">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/80">Build the next useful system</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/80">Let’s work together</p>
             <h2 className="mt-5 max-w-2xl text-4xl font-medium leading-[1.04] tracking-[-0.045em] text-white sm:text-5xl">
-              Complex data. Clear decisions. Human control.
+              Clear data. Useful tools. Better work.
             </h2>
-            <Link to="/contact" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">
+            <Link to="/contact" onClick={() => trackEvent("contact_cta_click", { surface: "footer" })} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">
               Start a conversation <ArrowUpRight size={17} />
             </Link>
           </div>

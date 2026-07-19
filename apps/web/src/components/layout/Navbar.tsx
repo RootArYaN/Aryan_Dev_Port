@@ -3,12 +3,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { profile } from "@/data/profile";
+import { trackEvent } from "@/lib/analytics";
 
 const links = [
   { label: "Work", to: "/work" },
-  { label: "Journey", to: "/journey" },
-  { label: "Expertise", to: "/expertise" },
-  { label: "Lab", to: "/lab" },
+  { label: "About", to: "/journey" },
+  { label: "Skills", to: "/expertise" },
+  { label: "Learning", to: "/lab" },
 ];
 
 export function Navbar() {
@@ -31,7 +32,7 @@ export function Navbar() {
           </span>
           <span className="hidden sm:block">
             <span className="block text-sm font-semibold tracking-[-0.02em] text-white">{profile.name}</span>
-            <span className="block text-[10px] uppercase tracking-[0.18em] text-slate-500">Analytics systems</span>
+            <span className="block text-[10px] uppercase tracking-[0.18em] text-slate-500">Data systems</span>
           </span>
         </Link>
 
@@ -57,6 +58,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             to="/contact"
+            onClick={() => trackEvent("contact_cta_click", { surface: "navbar" })}
             className="hidden min-h-10 items-center gap-2 px-1 text-sm font-semibold text-cyan-100 transition hover:text-white sm:inline-flex"
           >
             Connect <ArrowUpRight size={16} />

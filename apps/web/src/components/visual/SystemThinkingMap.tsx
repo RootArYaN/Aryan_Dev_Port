@@ -9,7 +9,7 @@ const signals = [
     icon: DatabaseZap,
     metric: "91.8%",
     metricLabel: "stable output",
-    outcome: "Review two parameter combinations",
+    outcome: "Review two settings",
     path: "M42 34 C112 34 104 108 184 108",
     color: "#73e4de",
   },
@@ -19,7 +19,7 @@ const signals = [
     icon: Boxes,
     metric: "12.4%",
     metricLabel: "overstock risk",
-    outcome: "Reallocate three ageing assortments",
+    outcome: "Move three ageing stock groups",
     path: "M42 108 H184",
     color: "#a78bfa",
   },
@@ -29,7 +29,7 @@ const signals = [
     icon: ChartNoAxesCombined,
     metric: "24.7%",
     metricLabel: "conversion",
-    outcome: "Test the underperforming price band",
+    outcome: "Test the weak price range",
     path: "M42 182 C112 182 104 108 184 108",
     color: "#f7c66a",
   },
@@ -49,7 +49,7 @@ export function SystemThinkingMap() {
 
   return (
     <div className="thinking-map" style={{ "--thinking-accent": active.color } as React.CSSProperties}>
-      <div className="thinking-map__label"><span><i /> live model</span><small>validated sample</small></div>
+      <div className="thinking-map__label"><span><i /> live model</span><small>checked sample</small></div>
 
       <div className="thinking-map__canvas">
         <svg viewBox="0 0 360 216" aria-hidden="true">

@@ -6,13 +6,13 @@ import { SectionHeading } from "@/components/common/SectionHeading";
 
 export function JourneyPreview() {
   return (
-    <section className="px-5 py-28 lg:px-8 lg:py-36">
+    <section className="px-5 py-16 lg:px-8 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <Reveal className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-24">
           <div>
-            <SectionHeading eyebrow="Journey" title="Engineering context before engineering code." description="Manufacturing, robotics, research, and leadership shape how I approach ambiguous business systems." />
+            <SectionHeading eyebrow="About" title="From machines to data tools." description="Manufacturing, robotics, research, and teamwork shaped how I build." />
             <Link to="/journey" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">
-              Explore the timeline <ArrowRight size={17} />
+              View the timeline <ArrowRight size={17} />
             </Link>
           </div>
           <div className="space-y-5">

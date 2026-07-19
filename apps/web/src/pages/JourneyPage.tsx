@@ -10,10 +10,10 @@ import { PageProcessVisual } from "@/components/visual/PageProcessVisual";
 const iconMap = [Briefcase, Briefcase, Microscope, Lightbulb, GraduationCap];
 
 const achievements = [
-  { value: "Top 10", label: "SAE autonomous drone challenge" },
+  { value: "Top 10", label: "SAE drone challenge" },
   { value: "2nd", label: "Robofest hexapod competition" },
-  { value: "₹1L", label: "innovation funding secured" },
-  { value: "3", label: "patent outcomes across product and design" },
+  { value: "₹1L", label: "project funding won" },
+  { value: "3", label: "product and design patent results" },
 ];
 
 export function JourneyPage() {
@@ -25,13 +25,13 @@ export function JourneyPage() {
     <PageTransition>
       <PageIntro
         index="02"
-        eyebrow="Journey"
-        title="A systems career shaped by manufacturing, robotics, and real users."
-        description="The path is not a straight transition from mechanical engineering to software. It is a continuous focus on how complex systems behave, fail, communicate, and improve."
+        eyebrow="About"
+        title="From mechanical engineering to data tools."
+        description="Manufacturing and robotics taught me how systems work. Software helped me make them easier to use."
         visual={<PageProcessVisual variant="journey" />}
       />
 
-      <section className="px-5 pb-24 lg:px-8 lg:pb-36">
+      <section className="px-5 pb-16 lg:px-8 lg:pb-20">
         <div ref={timelineRef} className="relative mx-auto max-w-7xl">
           <div className="absolute bottom-0 left-[1.18rem] top-0 w-px bg-white/[0.08] md:left-1/2" />
           <motion.div style={{ scaleY: lineScale }} className="absolute bottom-0 left-[1.18rem] top-0 w-px origin-top bg-gradient-to-b from-cyan-200 via-violet-300 to-emerald-300 md:left-1/2" />
@@ -70,10 +70,10 @@ export function JourneyPage() {
         </div>
       </section>
 
-      <section className="px-5 py-24 lg:px-8 lg:py-28">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Selected outcomes</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Results</p>
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {achievements.map((item) => (
                 <div key={item.label} className="adaptive-surface rounded-[1.35rem] border p-7">

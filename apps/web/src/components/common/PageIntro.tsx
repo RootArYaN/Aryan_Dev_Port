@@ -11,7 +11,7 @@ interface PageIntroProps {
 
 export function PageIntro({ eyebrow, title, description, index, visual }: PageIntroProps) {
   return (
-    <header className="mx-auto max-w-7xl px-5 pb-16 pt-36 lg:px-8 lg:pb-24 lg:pt-44">
+    <header className="mx-auto max-w-7xl px-5 pb-10 pt-32 lg:px-8 lg:pb-14 lg:pt-36">
       <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.55 }}>
           <div className="flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200/85">

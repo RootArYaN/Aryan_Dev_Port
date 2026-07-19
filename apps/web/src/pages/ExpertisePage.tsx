@@ -8,10 +8,10 @@ import { capabilityGroups, principles } from "@/data/profile";
 import { PageProcessVisual } from "@/components/visual/PageProcessVisual";
 
 const stackLayers = [
-  { icon: Database, label: "Enterprise data", text: "Production and pre-production SQL Server, multiple schemas, large operational datasets." },
-  { icon: Braces, label: "Business services", text: "Python APIs, validation, authentication, calculations, caching, and preprocessing." },
-  { icon: Layers3, label: "Decision experience", text: "React and Vite interfaces with Radix/shadcn patterns, focused flows, and responsive design." },
-  { icon: ShieldCheck, label: "Release confidence", text: "Testing, access control, environment separation, human verification, and safe deployment habits." },
+  { icon: Database, label: "Data", text: "Large SQL Server datasets from production and test systems." },
+  { icon: Braces, label: "Backend", text: "Python APIs, login checks, calculations, caching, and data checks." },
+  { icon: Layers3, label: "Frontend", text: "Clear and responsive React interfaces for focused work." },
+  { icon: ShieldCheck, label: "Release", text: "Testing, access control, human review, and safe deployment." },
 ];
 
 export function ExpertisePage() {
@@ -19,13 +19,13 @@ export function ExpertisePage() {
     <PageTransition>
       <PageIntro
         index="03"
-        eyebrow="Expertise"
-        title="Broad enough to ship. Honest enough to keep learning."
-        description="The strength is end-to-end problem ownership: understanding operational context, retrieving enterprise data, building logic and interfaces, validating outputs, and improving the workflow after release."
+        eyebrow="Skills"
+        title="I can build the full tool and keep learning."
+        description="I understand the problem, get the data, build the logic and screen, test the result, and improve it after release."
         visual={<PageProcessVisual variant="expertise" />}
       />
 
-      <section className="px-5 pb-28 lg:px-8 lg:pb-36">
+      <section className="px-5 pb-16 lg:px-8 lg:pb-20">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
           {capabilityGroups.map((group, index) => (
             <Reveal key={group.title} delay={index * 0.04}>
@@ -56,13 +56,13 @@ export function ExpertisePage() {
         </div>
       </section>
 
-      <section className="px-5 py-28 lg:px-8 lg:py-36">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeading
-              eyebrow="System layers"
-              title="From source schema to executive decision."
-              description="A clean modular-monolith mindset keeps the stack understandable while still respecting security, data contracts, deployment boundaries, and future growth."
+              eyebrow="How it fits together"
+              title="From raw data to a clear decision."
+              description="Each layer has one job, so the system stays easy to test, secure, and change."
             />
           </Reveal>
           <div className="relative mt-14 grid gap-4 lg:grid-cols-4">
@@ -83,10 +83,10 @@ export function ExpertisePage() {
         </div>
       </section>
 
-      <section className="px-5 py-28 lg:px-8 lg:py-36">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.76fr_1.24fr] lg:gap-24">
           <Reveal>
-            <SectionHeading eyebrow="Engineering principles" title="Professional does not have to mean complicated." description="The best internal system is usually the one a future engineer can understand, a user can trust, and a manager can act on." />
+            <SectionHeading eyebrow="How I work" title="Professional does not mean complicated." description="A good tool is easy to understand, trust, and use." />
           </Reveal>
           <div className="grid gap-3 sm:grid-cols-2">
             {principles.map((principle, index) => (

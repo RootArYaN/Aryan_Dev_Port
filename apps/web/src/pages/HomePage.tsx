@@ -4,17 +4,15 @@ import { Hero } from "@/components/sections/Hero";
 import { HomeCTA } from "@/components/sections/HomeCTA";
 import { Impact } from "@/components/sections/Impact";
 import { JourneyPreview } from "@/components/sections/JourneyPreview";
-import { SaasAnalyticsSimulation } from "@/components/sections/SaasAnalyticsSimulation";
-import { Workflow } from "@/components/sections/Workflow";
+import { FlagshipStory } from "@/components/sections/FlagshipStory";
 
 export function HomePage() {
   return (
     <PageTransition>
       <Hero />
       <Impact />
-      <SaasAnalyticsSimulation />
+      <FlagshipStory />
       <FeaturedWork />
-      <Workflow />
       <JourneyPreview />
       <HomeCTA />
     </PageTransition>

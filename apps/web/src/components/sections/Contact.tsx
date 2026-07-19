@@ -7,13 +7,14 @@ import { profile } from "@/data/profile";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
+import { trackEvent } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(80),
   email: z.email("Please enter a valid email."),
   company: z.string().trim().max(120).optional(),
   subject: z.string().trim().min(3, "Please add a subject.").max(140),
-  message: z.string().trim().min(20, "Please share a little more context.").max(3000),
+  message: z.string().trim().min(20, "Please share a little more.").max(3000),
   website: z.string().max(0).optional(),
 });
 type ContactForm = z.infer<typeof contactSchema>;
@@ -24,6 +25,7 @@ export function Contact() {
 
   const onSubmit = async (values: ContactForm) => {
     setStatus("idle");
+    trackEvent("contact_cta_click", { surface: "contact-form-submit" });
     try {
       if (!api.isConfigured) {
         window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(`${values.message}\n\nFrom: ${values.name}${values.company ? `, ${values.company}` : ""}`)}`;
@@ -56,12 +58,12 @@ export function Contact() {
         </label>
         <label className="field-label sm:col-span-2">
           Subject
-          <Input className="mt-2" placeholder="Role, project, collaboration, or question" {...register("subject")} />
+          <Input className="mt-2" placeholder="Role, project, or question" {...register("subject")} />
           {errors.subject && <span className="field-error">{errors.subject.message}</span>}
         </label>
         <label className="field-label sm:col-span-2">
-          Context
-          <Textarea className="mt-2" placeholder="What are you building, hiring for, or trying to improve?" {...register("message")} />
+          Message
+          <Textarea className="mt-2" placeholder="What would you like to discuss?" {...register("message")} />
           {errors.message && <span className="field-error">{errors.message.message}</span>}
         </label>
         <input className="hidden" tabIndex={-1} autoComplete="off" {...register("website")} />
@@ -70,7 +72,7 @@ export function Contact() {
             {isSubmitting ? <><Loader2 className="animate-spin" size={17} />Sending</> : <>Send message <Send size={16} /></>}
           </Button>
           {status === "sent" && <span className="flex items-center gap-2 text-sm text-emerald-300"><CheckCircle2 size={17} />Message received.</span>}
-          {status === "error" && <span className="text-sm text-rose-300">Delivery failed. Please use email instead.</span>}
+          {status === "error" && <span className="text-sm text-rose-300">Could not send. Please use email.</span>}
         </div>
       </form>
     </div>

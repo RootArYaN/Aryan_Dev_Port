@@ -7,6 +7,7 @@ import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { fallbackProjects, labItems } from "@/data/profile";
 import { AnalyticsWorkspace } from "@/components/visual/AnalyticsWorkspace";
+import { ExcelWorkspace } from "@/components/visual/ExcelWorkspace";
 import { PageProcessVisual } from "@/components/visual/PageProcessVisual";
 
 export function LabPage() {
@@ -16,29 +17,29 @@ export function LabPage() {
     <PageTransition>
       <PageIntro
         index="04"
-        eyebrow="Learning lab"
-        title="Where current work becomes deeper engineering capability."
-        description="A transparent view of what I am studying, experimenting with, and turning into reusable knowledge—without pretending every emerging skill is already expert-level."
+        eyebrow="Learning"
+        title="What I am learning and building now."
+        description="A clear view of current experiments, new skills, and work in progress."
         visual={<PageProcessVisual variant="lab" />}
       />
 
-      <section className="px-5 pb-28 lg:px-8 lg:pb-36">
+      <section className="px-5 pb-16 lg:px-8 lg:pb-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <Reveal>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Reporting workbench</p>
-              <h2 className="mt-5 text-4xl font-medium tracking-[-0.045em] text-white sm:text-5xl">From raw operational data to a report people can trust.</h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-slate-400">A compact view of the real workflow: query the source, shape the data in code, validate the output, and publish a clear decision-support report.</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Report demo</p>
+              <h2 className="mt-5 text-4xl font-medium tracking-[-0.045em] text-white sm:text-5xl">From raw data to a trusted report.</h2>
+              <p className="mt-6 max-w-xl text-base leading-8 text-slate-400">Get the data, shape it in code, check the result, and show a clear report.</p>
               <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 <div className="adaptive-surface rounded-2xl border p-4">
                   <Database size={18} className="text-cyan-200" />
-                  <p className="mt-4 text-sm font-medium text-white">Source connected</p>
-                  <p className="mt-2 text-xs leading-6 text-slate-500">SQL retrieval, reusable transformations, and explicit data-quality checks.</p>
+                  <p className="mt-4 text-sm font-medium text-white">Data connected</p>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">SQL queries, shared data steps, and clear checks.</p>
                 </div>
                 <div className="adaptive-surface rounded-2xl border p-4">
                   <FileCode2 size={18} className="text-violet-300" />
-                  <p className="mt-4 text-sm font-medium text-white">Code made visible</p>
-                  <p className="mt-2 text-xs leading-6 text-slate-500">SQL, Python, and frontend reporting presented as one understandable system.</p>
+                  <p className="mt-4 text-sm font-medium text-white">Code you can follow</p>
+                  <p className="mt-2 text-xs leading-6 text-slate-500">SQL, Python, and React shown as one simple flow.</p>
                 </div>
               </div>
             </div>
@@ -48,7 +49,20 @@ export function LabPage() {
         </div>
       </section>
 
-      <section className="px-5 py-28 lg:px-8 lg:py-36">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.58fr_1.42fr] lg:items-center">
+          <Reveal>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200/75">Excel model</p>
+              <h2 className="mt-5 text-4xl font-medium tracking-[-0.045em] text-white sm:text-5xl">Edit a number. See every formula update.</h2>
+              <p className="mt-6 max-w-lg text-base leading-8 text-slate-400">Change an Actual cell, then try the variance, total, average, and status formulas.</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.06}><ExcelWorkspace /></Reveal>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
           {labItems.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.04}>
@@ -71,13 +85,13 @@ export function LabPage() {
         </div>
       </section>
 
-      <section className="px-5 py-28 lg:px-8 lg:py-36">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <Reveal className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
             <SectionHeading
-              eyebrow="Engineering foundation"
-              title="Robotics taught me to respect the full system."
-              description="Hardware makes weak assumptions visible. These projects developed an instinct for interfaces, sensing, constraints, iteration, and real-world failure modes."
+              eyebrow="Robotics work"
+              title="Robotics taught me to test the whole system."
+              description="Hardware fails in clear ways. These projects taught me to test sensors, code, controls, and real use together."
             />
             <Link to="/journey" className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">See the journey <ArrowUpRight size={17} /></Link>
           </Reveal>
@@ -87,16 +101,16 @@ export function LabPage() {
         </div>
       </section>
 
-      <section className="px-5 py-28 lg:px-8 lg:py-36">
+      <section className="px-5 py-16 lg:px-8 lg:py-20">
         <Reveal className="adaptive-surface mx-auto max-w-7xl rounded-[2rem] border p-8 sm:p-12 lg:p-16">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Next public build</p>
-              <h2 className="mt-5 text-4xl font-medium tracking-[-0.045em] text-white sm:text-5xl">A sanitized manufacturing ERP demonstrator.</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/75">Next public project</p>
+              <h2 className="mt-5 text-4xl font-medium tracking-[-0.045em] text-white sm:text-5xl">A public manufacturing ERP demo.</h2>
             </div>
             <div>
-              <p className="text-base leading-8 text-slate-400">Dummy data, realistic domain modelling, role-based access, inventory and production flows, audit history, analytics, API documentation, testing, containers, and deployment notes—all designed as a public proof of engineering depth.</p>
-              <Link to="/contact" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">Follow the build <ArrowUpRight size={17} /></Link>
+              <p className="text-base leading-8 text-slate-400">It will use sample data and include user roles, stock, production, history, reports, tests, and setup notes.</p>
+              <Link to="/contact" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-cyan-200">Ask about the build <ArrowUpRight size={17} /></Link>
             </div>
           </div>
         </Reveal>

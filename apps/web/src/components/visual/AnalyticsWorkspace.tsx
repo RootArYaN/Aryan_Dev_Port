@@ -20,7 +20,7 @@ const sessions = [
       "SELECT * FROM daily_output ORDER BY work_date DESC;",
     ],
     bars: [44, 58, 52, 72, 64, 81, 76, 88],
-    insight: "Polishing throughput is 12.4% above baseline.",
+    insight: "Polishing output is 12.4% above the usual level.",
   },
   {
     id: "inventory",
@@ -40,7 +40,7 @@ const sessions = [
       "snapshot[\"age_days\"] = days_since_last_move(snapshot)",
     ],
     bars: [82, 76, 68, 61, 55, 49, 42, 36],
-    insight: "Three assortments hold 61% of 90+ day stock.",
+    insight: "Three stock groups hold 61% of items older than 90 days.",
   },
   {
     id: "sales",
@@ -59,7 +59,7 @@ const sessions = [
       "return validateReport(report);",
     ],
     bars: [38, 46, 43, 55, 61, 68, 74, 84],
-    insight: "Revenue +8.7%; price variance remains in range.",
+    insight: "Revenue is up 8.7%. Price change is within range.",
   },
 ] as const;
 
@@ -117,7 +117,7 @@ export function AnalyticsWorkspace() {
           <div className="analytics-kpis">
             <div><span>Rows</span><strong>{session.rows}</strong></div>
             <div><span>Refresh</span><strong>{session.refresh}</strong></div>
-            <div><span>Coverage</span><strong>{session.coverage}</strong></div>
+            <div><span>Checked</span><strong>{session.coverage}</strong></div>
           </div>
           <div className="analytics-chart" aria-label="Eight-period reporting trend">
             <div className="analytics-chart__grid" />
