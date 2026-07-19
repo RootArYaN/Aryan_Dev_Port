@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Aryan Tembhekar — Enterprise Portfolio
 
 A production-oriented portfolio monorepo that demonstrates the way Aryan works: understand an operational problem, model the data, automate the workflow, build the backend, create a clean interface, validate the result, and preserve human decision-making for critical actions.
@@ -114,3 +115,7 @@ The public site links to Aryan's LinkedIn profile. A real LinkedIn sign-in or sh
 - Run `npm audit`, `uv run ruff check .`, `uv run pytest`, and dependency updates before each release.
 
 See [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) for the build-and-learn sequence and [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the visual and motion architecture.
+=======
+# Aryan_Dev_Port
+New portfolio website 
+>>>>>>> origin/main
