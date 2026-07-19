@@ -1,8 +1,8 @@
 from functools import lru_cache
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import Field, field_validator, model_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 DEV_JWT_SECRET = "dev-only-jwt-secret-change-before-production"
 DEV_ENCRYPTION_KEY = "ezXm55ShNTmTHjwM4hQ6WlI7YzV7w3H0mR1mcF13lK8="
@@ -18,12 +18,18 @@ class Settings(BaseSettings):
     environment: Literal["development", "test", "production"] = "development"
     api_v1_prefix: str = "/api/v1"
     database_url: str = "sqlite+aiosqlite:///./portfolio.db"
-    allowed_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
-    allowed_hosts: list[str] = Field(default_factory=lambda: ["localhost", "127.0.0.1", "testserver"])
+    allowed_origins: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: ["http://localhost:5173"]
+    )
+    allowed_hosts: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: ["localhost", "127.0.0.1", "testserver"]
+    )
     auto_create_tables: bool = True
 
     jwt_secret: str = DEV_JWT_SECRET
-    app_encryption_keys: list[str] = Field(default_factory=lambda: [DEV_ENCRYPTION_KEY])
+    app_encryption_keys: Annotated[list[str], NoDecode] = Field(
+        default_factory=lambda: [DEV_ENCRYPTION_KEY]
+    )
     ip_hash_pepper: str = DEV_IP_PEPPER
     access_token_minutes: int = 30
 
