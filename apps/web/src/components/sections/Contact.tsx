@@ -21,10 +21,12 @@ type ContactForm = z.infer<typeof contactSchema>;
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<ContactForm>({ resolver: zodResolver(contactSchema) });
 
   const onSubmit = async (values: ContactForm) => {
     setStatus("idle");
+    setErrorMessage("");
     trackEvent("contact_cta_click", { surface: "contact-form-submit" });
     try {
       if (!api.isConfigured) {
@@ -36,8 +38,13 @@ export function Contact() {
       trackEvent("contact_submitted", { method: "api" });
       reset();
       setStatus("sent");
-    } catch {
+    } catch (error) {
       setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Could not send the message. Please use email instead.",
+      );
     }
   };
 
@@ -74,7 +81,11 @@ export function Contact() {
             {isSubmitting ? <><Loader2 className="animate-spin" size={17} />Sending</> : <>Send message <Send size={16} /></>}
           </Button>
           {status === "sent" && <span className="flex items-center gap-2 text-sm text-emerald-300"><CheckCircle2 size={17} />Message received.</span>}
-          {status === "error" && <span className="text-sm text-rose-300">Could not send. Please use email.</span>}
+          {status === "error" && (
+            <span className="text-sm leading-6 text-rose-300" role="alert">
+              {errorMessage}
+            </span>
+          )}
         </div>
       </form>
     </div>
