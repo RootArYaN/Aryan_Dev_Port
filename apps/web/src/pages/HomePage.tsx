@@ -5,6 +5,7 @@ import { HomeCTA } from "@/components/sections/HomeCTA";
 import { Impact } from "@/components/sections/Impact";
 import { JourneyPreview } from "@/components/sections/JourneyPreview";
 import { FlagshipStory } from "@/components/sections/FlagshipStory";
+import { PortfolioBuildStory } from "@/components/sections/PortfolioBuildStory";
 
 export function HomePage() {
   return (
@@ -14,6 +15,7 @@ export function HomePage() {
       <FlagshipStory />
       <FeaturedWork />
       <JourneyPreview />
+      <PortfolioBuildStory />
       <HomeCTA />
     </PageTransition>
   );

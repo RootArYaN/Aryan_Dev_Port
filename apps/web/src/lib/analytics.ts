@@ -6,6 +6,7 @@ type AnalyticsEventMap = {
   case_study_depth: { slug: string; depth: "50" | "90" };
   resume_click: { surface: string };
   contact_cta_click: { surface: string };
+  contact_submitted: { method: "api" | "email" };
 };
 
 type AnalyticsEventName = keyof AnalyticsEventMap;

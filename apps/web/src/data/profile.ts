@@ -6,7 +6,7 @@ export const profile = {
   location: "Surat, India",
   email: "aryantembhekar294@gmail.com",
   linkedin: "https://www.linkedin.com/in/aryan-tembhekar-5697602a3/",
-  github: "https://github.com/your-github-username",
+  github: "https://github.com/RootArYaN",
   headline: "Analytics Engineer building clear tools for real work.",
   introduction:
     "I turn production, inventory, pricing, and sales data into fast tools that teams can trust.",

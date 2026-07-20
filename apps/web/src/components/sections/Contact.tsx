@@ -28,10 +28,12 @@ export function Contact() {
     trackEvent("contact_cta_click", { surface: "contact-form-submit" });
     try {
       if (!api.isConfigured) {
+        trackEvent("contact_submitted", { method: "email" });
         window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(values.subject)}&body=${encodeURIComponent(`${values.message}\n\nFrom: ${values.name}${values.company ? `, ${values.company}` : ""}`)}`;
         return;
       }
       await api.contact(values);
+      trackEvent("contact_submitted", { method: "api" });
       reset();
       setStatus("sent");
     } catch {

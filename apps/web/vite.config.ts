@@ -5,8 +5,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
+  const repositoryName = process.env.GITHUB_REPOSITORY?.split("/").at(-1);
+  const configuredBase = process.env.VITE_BASE_PATH ?? env.VITE_BASE_PATH;
+  const base = configuredBase || (process.env.GITHUB_ACTIONS === "true" && repositoryName ? `/${repositoryName}/` : "/");
 
   return {
+    base,
     plugins: [react(), tailwindcss()],
     envDir: process.cwd(),
     resolve: {

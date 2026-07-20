@@ -33,8 +33,11 @@ jobs:
         working-directory: apps/web
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}
+          VITE_PLAUSIBLE_DOMAIN: ${{ vars.VITE_PLAUSIBLE_DOMAIN }}
+          VITE_PLAUSIBLE_SCRIPT_URL: ${{ vars.VITE_PLAUSIBLE_SCRIPT_URL }}
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: apps/web/dist
 

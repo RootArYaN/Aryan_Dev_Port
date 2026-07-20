@@ -28,20 +28,38 @@ class MailService:
             await self._mark(contact_id, "failed", str(exc)[:500])
 
     def _send_sync(self, name: str, email: str, company: str | None, subject: str, message: str) -> None:
-        mail = EmailMessage()
-        mail["From"] = self.settings.mail_from
-        mail["To"] = self.settings.mail_to
-        mail["Reply-To"] = email
-        mail["Subject"] = f"Portfolio enquiry: {subject}"
+        safe_name = " ".join(name.splitlines()).strip()
+        safe_subject = " ".join(subject.splitlines()).strip()
+        host_mail = EmailMessage()
+        host_mail["From"] = self.settings.mail_from
+        host_mail["To"] = self.settings.mail_to
+        host_mail["Reply-To"] = email
+        host_mail["Subject"] = f"Portfolio enquiry: {safe_subject}"
         company_line = company or "Not provided"
-        mail.set_content(f"Name: {name}\nEmail: {email}\nCompany: {company_line}\n\n{message}")
+        host_mail.set_content(
+            f"Name: {safe_name}\nEmail: {email}\nCompany: {company_line}\n\n{message}"
+        )
+
+        confirmation = EmailMessage()
+        confirmation["From"] = self.settings.mail_from
+        confirmation["To"] = email
+        confirmation["Reply-To"] = self.settings.mail_to
+        confirmation["Subject"] = "Thanks — I received your message"
+        confirmation.set_content(
+            f"Hi {safe_name},\n\n"
+            "Thanks for getting in touch. I received your message and will reply as soon as I can.\n\n"
+            f"Subject: {safe_subject}\n\n"
+            f"— {self.settings.admin_name}"
+        )
 
         with smtplib.SMTP(self.settings.smtp_host, self.settings.smtp_port, timeout=15) as smtp:
             if self.settings.smtp_use_tls:
                 smtp.starttls()
             if self.settings.smtp_username:
                 smtp.login(self.settings.smtp_username, self.settings.smtp_password)
-            smtp.send_message(mail)
+            smtp.send_message(host_mail)
+            if self.settings.mail_send_confirmation:
+                smtp.send_message(confirmation)
 
     async def _mark(self, contact_id: str, status: str, error: str | None = None) -> None:
         async with SessionLocal() as session:

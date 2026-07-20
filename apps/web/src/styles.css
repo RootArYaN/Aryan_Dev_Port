@@ -2312,6 +2312,260 @@ button.excel-sheet__row-number {
   opacity: 1;
 }
 
+.portfolio-build {
+  position: relative;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 76% 46%, rgba(126, 231, 226, 0.04), transparent 30%),
+    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.01), transparent);
+}
+
+.portfolio-build__intro {
+  display: grid;
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.portfolio-build__intro > p {
+  max-width: 31rem;
+  color: rgb(100 116 139);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.portfolio-build__workspace {
+  --build-accent: #73e4de;
+  margin-top: 3.5rem;
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--build-accent) 7%, transparent), transparent 32%),
+    rgba(4, 13, 20, 0.24);
+  transition: background 280ms ease;
+}
+
+.portfolio-build__status {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.portfolio-build__status span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  color: rgb(71 85 105);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.portfolio-build__status span:last-child {
+  color: color-mix(in srgb, var(--build-accent) 74%, white);
+}
+
+.portfolio-build__status i {
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--build-accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--build-accent) 58%, transparent);
+}
+
+.portfolio-build__track {
+  position: relative;
+  display: grid;
+  min-width: 34rem;
+  grid-template-columns: repeat(5, minmax(6rem, 1fr));
+  overflow-x: auto;
+  padding: 1rem 0.6rem 1.25rem;
+  scrollbar-width: none;
+}
+
+.portfolio-build__track::-webkit-scrollbar {
+  display: none;
+}
+
+.portfolio-build__rail {
+  position: absolute;
+  top: 2.38rem;
+  right: 10%;
+  left: 10%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.065);
+}
+
+.portfolio-build__rail i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgb(125 211 252 / 0.7), var(--build-accent));
+  transform-origin: left;
+}
+
+.portfolio-build__track button {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.28rem;
+  color: rgb(71 85 105);
+  transition: color 180ms ease;
+}
+
+.portfolio-build__track button > span {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: #07111a;
+  transition: border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.portfolio-build__track button small {
+  color: rgb(51 65 85);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.49rem;
+}
+
+.portfolio-build__track button strong {
+  font-size: 0.63rem;
+  font-weight: 650;
+}
+
+.portfolio-build__track button:hover,
+.portfolio-build__track button.is-reached {
+  color: rgb(203 213 225);
+}
+
+.portfolio-build__track button.is-reached > span {
+  border-color: color-mix(in srgb, var(--build-accent) 36%, transparent);
+  color: color-mix(in srgb, var(--build-accent) 78%, white);
+}
+
+.portfolio-build__track button[aria-selected="true"] > span {
+  border-color: color-mix(in srgb, var(--build-accent) 66%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--build-accent) 16%, transparent);
+  transform: translateY(-2px);
+}
+
+.portfolio-build__detail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.portfolio-build__copy,
+.portfolio-build__log {
+  min-width: 0;
+  padding: clamp(1.5rem, 3.4vw, 2.6rem);
+}
+
+.portfolio-build__copy > span {
+  color: var(--build-accent);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.portfolio-build__copy h3 {
+  margin-top: 0.75rem;
+  color: white;
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  font-weight: 520;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.portfolio-build__copy p {
+  max-width: 35rem;
+  margin-top: 1rem;
+  color: rgb(148 163 184);
+  font-size: 0.85rem;
+  line-height: 1.75;
+}
+
+.portfolio-build__copy > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.4rem;
+}
+
+.portfolio-build__copy > div small {
+  color: rgb(100 116 139);
+  font-size: 0.6rem;
+}
+
+.portfolio-build__log {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.portfolio-build__log > div,
+.portfolio-build__log li {
+  display: flex;
+  align-items: center;
+}
+
+.portfolio-build__log > div {
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgb(71 85 105);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+}
+
+.portfolio-build__log > div small {
+  color: rgb(110 231 183);
+}
+
+.portfolio-build__log ol {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.8rem;
+}
+
+.portfolio-build__log li {
+  min-height: 2.75rem;
+  gap: 0.7rem;
+  color: rgb(148 163 184);
+  font-size: 0.63rem;
+}
+
+.portfolio-build__log li > span {
+  color: rgb(51 65 85);
+}
+
+.portfolio-build__log li > i {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--build-accent);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--build-accent) 50%, transparent);
+}
+
+.portfolio-build__log li strong {
+  min-width: 0;
+  flex: 1;
+  font-weight: 560;
+}
+
+.portfolio-build__log li small {
+  color: rgb(71 85 105);
+}
+
 .flagship-story {
   position: relative;
   overflow: clip;
@@ -3436,6 +3690,10 @@ button.excel-sheet__row-number {
 }
 
 @media (min-width: 900px) {
+  .portfolio-build__intro {
+    grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+  }
+
   .flagship-story__intro {
     grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
   }
@@ -3471,6 +3729,25 @@ button.excel-sheet__row-number {
 }
 
 @media (max-width: 760px) {
+  .portfolio-build__workspace {
+    margin-top: 2.5rem;
+  }
+
+  .portfolio-build__status {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .portfolio-build__detail {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-build__log {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 0;
+  }
+
   .flagship-story__intro {
     padding-bottom: 3rem;
   }

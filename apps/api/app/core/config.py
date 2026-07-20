@@ -48,6 +48,7 @@ class Settings(BaseSettings):
     smtp_use_tls: bool = True
     mail_from: str = "portfolio@example.com"
     mail_to: str = "aryantembhekar294@gmail.com"
+    mail_send_confirmation: bool = True
 
     contact_rate_limit: int = 5
     contact_rate_window_seconds: int = 3600

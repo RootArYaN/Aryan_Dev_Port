@@ -26,6 +26,7 @@ class ContactAdminResponse(BaseModel):
     company: str | None
     subject: str
     message: str
+    mail_status: str
     created_at: str
 
     def to_camel(self) -> dict[str, str | None]:
@@ -36,5 +37,6 @@ class ContactAdminResponse(BaseModel):
             "company": self.company,
             "subject": self.subject,
             "message": self.message,
+            "mailStatus": self.mail_status,
             "createdAt": self.created_at,
         }

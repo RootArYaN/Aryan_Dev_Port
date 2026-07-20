@@ -9,10 +9,11 @@ initializeAnalytics();
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Root element was not found");
+const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 createRoot(root).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={routerBase}>
       <App />
     </BrowserRouter>
   </StrictMode>,

@@ -19,6 +19,22 @@ export type ContactPayload = {
   website?: string;
 };
 
+export type AdminMetrics = {
+  totalMessages: number;
+  todayMessages: number;
+  lastSevenDays: number;
+  trend: Array<{ date: string; label: string; count: number }>;
+  mail: {
+    configured: boolean;
+    recipient: string;
+    sent: number;
+    failed: number;
+    pending: number;
+    notConfigured: number;
+    deliveryRate: number | null;
+  };
+};
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "");
 
 function getCookie(name: string): string | undefined {
@@ -38,11 +54,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers.set("X-CSRF-Token", decodeURIComponent(csrf));
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
-    headers,
-    credentials: "include",
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...init,
+      headers,
+      credentials: "include",
+    });
+  } catch {
+    throw new Error("Cannot reach the backend. Start the API on port 8000 and try again.");
+  }
 
   if (!response.ok) {
     const body = await response.json().catch(() => ({ detail: "Request failed" }));
@@ -65,5 +86,6 @@ export const api = {
     }),
   me: () => request<{ email: string; name: string; role: string }>("/auth/me"),
   logout: () => request<void>("/auth/logout", { method: "POST" }),
+  adminMetrics: () => request<AdminMetrics>("/admin/metrics"),
   adminMessages: () => request<Array<Record<string, string>>>("/admin/messages"),
 };
