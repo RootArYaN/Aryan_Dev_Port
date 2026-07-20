@@ -3880,3 +3880,27 @@ button.excel-sheet__row-number {
     transform: none;
   }
 }
+@keyframes resume-preview-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes resume-preview-dialog-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.985); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.resume-preview-overlay[data-state="open"] {
+  animation: resume-preview-backdrop-in 180ms ease-out;
+}
+
+.resume-preview-dialog[data-state="open"] {
+  animation: resume-preview-dialog-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-preview-overlay,
+  .resume-preview-dialog {
+    animation: none !important;
+  }
+}

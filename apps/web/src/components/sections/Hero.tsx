@@ -1,9 +1,9 @@
 import { motion } from "motion/react";
-import { ArrowDownRight, ArrowUpRight, Download, MapPin } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ResumePreview } from "@/components/common/ResumePreview";
 import { profile } from "@/data/profile";
 import { AnalyticsWorkspace } from "@/components/visual/AnalyticsWorkspace";
-import { trackEvent } from "@/lib/analytics";
 
 export function Hero() {
   return (
@@ -23,16 +23,7 @@ export function Hero() {
             <a href="#flagship-story" className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-cyan-200 px-5 py-3 text-sm font-semibold text-[#061017] transition hover:bg-cyan-100">
               See the main case <ArrowDownRight size={17} />
             </a>
-            <a
-              href={`${import.meta.env.BASE_URL}aryan-tembhekar-resume.pdf`}
-              target="_blank"
-              rel="noreferrer"
-              data-testid="resume-link"
-              onClick={() => trackEvent("resume_click", { surface: "homepage-hero" })}
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-white/[0.11] bg-white/[0.035] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.07]"
-            >
-              Resume <Download size={17} />
-            </a>
+            <ResumePreview />
             <Link to="/work" className="inline-flex min-h-12 items-center gap-2 px-3 py-3 text-sm font-semibold text-slate-400 transition hover:text-white">
               View all work <ArrowUpRight size={17} />
             </Link>
