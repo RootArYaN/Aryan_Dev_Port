@@ -17,7 +17,7 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://rootaryan.github.io
+        sync: false
       - key: ALLOWED_HOSTS
         value: "*.onrender.com"
       - key: AUTO_CREATE_TABLES
@@ -42,8 +42,6 @@ services:
         sync: false
       - key: ADMIN_NAME
         value: Aryan Tembhekar
-      - key: MAIL_TO
-        value: aryantembhekar294@gmail.com
       - key: MAIL_SEND_CONFIRMATION
         value: "false"
       - key: CONTACT_RATE_LIMIT

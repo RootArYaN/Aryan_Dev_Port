@@ -43,7 +43,7 @@ The result is deliberately calm and professional. Motion communicates relationsh
 
 ### 2. Scroll-linked timelines
 
-`Workflow.tsx` and `JourneyPage.tsx` use `useScroll` and `useTransform` to reveal the active timeline line as the reader moves through the content.
+`JourneyPage.tsx` uses `useScroll` and `useTransform` to reveal the active timeline line as the reader moves through the content.
 
 ### 3. Shared layout states
 
@@ -68,6 +68,12 @@ It remains behind the content, ignores pointer events, and respects reduced-moti
 ### 6. Project system diagrams
 
 `ProjectGlyph.tsx` creates reusable SVG visuals from project metadata. Each project gets a consistent system diagram with an individual accent rather than relying on stock images.
+
+### 7. Cloud deployment trace
+
+`CloudDeploymentStory.tsx` automatically steps through source, verification, API, database, and edge
+delivery. Visitors can select a stage directly, and reduced-motion preferences disable automatic
+cycling while preserving the complete architecture explanation.
 
 ## Accessibility rules
 

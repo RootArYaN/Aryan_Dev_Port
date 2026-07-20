@@ -1,149 +1,106 @@
 # Aryan Tembhekar — Enterprise Portfolio
 
-A production-oriented portfolio monorepo that demonstrates the way Aryan works: understand an operational problem, model the data, automate the workflow, build the backend, create a clean interface, validate the result, and preserve human decision-making for critical actions.
+A full-stack portfolio for analytics engineering, manufacturing systems, automation, and robotics.
+It combines an animated React experience with a secure FastAPI administration surface and managed
+PostgreSQL storage.
 
-The portfolio content is seeded from Aryan's analytics, manufacturing, automation, robotics, and leadership experience. Replace company-confidential details with safe summaries before publishing.
-
-## Architecture
+## Live architecture
 
 ```mermaid
 flowchart LR
-    U[Visitor / Recruiter] --> W[React + Vite Frontend]
-    W -->|HTTPS JSON| A[FastAPI API]
-    A --> M[Security & Request Middleware]
-    M --> S[Services]
-    S --> P[(PostgreSQL)]
-    S --> E[Encrypted Contact Data]
-    S --> SMTP[Mail Provider]
-    G[GitHub Actions] --> W
-    G --> I[Backend Container in GHCR]
+    V[Visitor] --> W[React on Render Static]
+    W -->|HTTPS JSON| A[FastAPI container on Render]
+    A -->|TLS| P[(Neon PostgreSQL)]
+    A --> E[Encrypted contact records]
+    G[Private GitHub repository] --> C[GitHub Actions checks]
+    C --> W
+    C --> A
 ```
 
-## What this repository demonstrates
+The home page includes an interactive deployment trace that explains this path from commit to live
+cloud infrastructure. Free Render services sleep while idle, so the first API request can take longer.
 
-- A multi-page React, TypeScript, Vite, Tailwind CSS, and Motion experience with route-level code splitting, interactive case studies, scroll-linked timelines, shared layout transitions, and a profile-specific animated background.
-- FastAPI, Uvicorn, SQLAlchemy, PostgreSQL, API validation, authentication, admin CRUD, and mail automation.
-- Password hashing, encrypted contact data, CSRF protection, strict CORS, security headers, request IDs, rate limiting, and secrets through environment variables.
-- GitHub Actions for quality checks, GitHub Pages deployment, and backend container publishing.
-- A modular monolith: enterprise structure without premature microservices or hard-to-follow abstractions.
+## Stack
 
+- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS, Motion, Radix UI
+- **Backend:** FastAPI, SQLAlchemy async, Alembic, Uvicorn
+- **Data:** Neon PostgreSQL with application-level encryption for contact details
+- **Security:** Argon2 password hashing, signed session cookies, CSRF protection, strict CORS,
+  trusted hosts, request limits, security headers, and environment-managed secrets
+- **Delivery:** Render, Docker, GitHub Actions
 
-## Portfolio experience
-
-The public site is no longer a single landing page. It includes:
-
-- `/` — positioning, animated decision-engine hero, metrics, featured work, workflow, and journey preview.
-- `/work` — filterable system portfolio.
-- `/work/:slug` — dedicated case studies with problem, approach, impact, architecture, and confidentiality notes.
-- `/journey` — scroll-linked professional, research, leadership, and education timeline.
-- `/expertise` — capability depth, system layers, and engineering principles.
-- `/lab` — current ERP, AI-assisted engineering, performance, and robotics learning.
-- `/contact` — focused professional outreach and secure backend contact flow.
-
-The background visual combines diamond-facet geometry, data nodes, blueprint grids, and system-flow animation to connect Aryan's manufacturing, analytics, and robotics experience. See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md).
-
-## Repository layout
+## Product surface
 
 ```text
-apps/web/     Multi-page React portfolio and private admin interface
-apps/api/     FastAPI API, database models, security, services, tests
-.github/      CI, Pages deployment, and backend image publishing
-docs/         Architecture, security, content, and learning notes
+/                    Positioning, impact, featured work, and cloud deployment story
+/work                Filterable project portfolio
+/work/:slug          Detailed case studies
+/journey             Professional and engineering timeline
+/expertise           Capability map and technical principles
+/lab                 Interactive analytics and spreadsheet demos
+/contact             Encrypted professional contact flow
+/admin                Private administration dashboard
 ```
 
-## Local setup
-
-1. Copy `.env.example` to `.env`.
-2. Generate production-grade secrets:
-
-   ```bash
-   cd apps/api
-   uv sync --all-groups
-   uv run python scripts/generate_secrets.py
-   ```
-
-3. Place the generated values into the root `.env`.
-4. Start PostgreSQL:
-
-   ```bash
-   docker compose up -d db
-   ```
-
-5. Start the API:
-
-   ```bash
-   cd apps/api
-   uv run alembic upgrade head
-   uv run python scripts/create_admin.py
-   uv run python scripts/seed.py
-   uv run uvicorn app.main:app --reload
-   ```
-
-6. Start the frontend in a second terminal:
-
-   ```bash
-   cd apps/web
-   npm install
-   npm run dev
-   ```
-
-## Email notifications
-
-Every contact form submission is stored first. When SMTP is configured, the API then sends:
-
-- an enquiry notification to `MAIL_TO`, with the visitor set as the reply address;
-- a short confirmation to the visitor when `MAIL_SEND_CONFIRMATION=true`.
-
-For a Gmail or Google Workspace mailbox, turn on 2-Step Verification and create an App Password.
-Add the following values to `apps/api/.env` for local development, or to your backend host's secret
-environment variables in production:
+## Repository
 
 ```text
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USERNAME=your-address@gmail.com
-SMTP_PASSWORD=your-16-character-app-password
-SMTP_USE_TLS=true
-MAIL_FROM=your-address@gmail.com
-MAIL_TO=your-address@gmail.com
-MAIL_SEND_CONFIRMATION=true
+apps/web/             React frontend
+apps/api/             FastAPI backend, migrations, scripts, and tests
+.github/workflows/    Continuous integration
+docs/                 Deployment, security, design, and publishing notes
+render.yaml           Render backend infrastructure definition
+docker-compose.yml    Local PostgreSQL and API services
 ```
 
-Use the App Password, not your normal Google password. Restart the API after changing environment
-variables, submit the contact form once, and open `/admin`. The dashboard shows whether mail was sent,
-failed, is still pending, or has not been configured. Never commit the real SMTP password to Git.
+## Local development
 
-Page views and interaction events are handled separately by Plausible. Set `VITE_PLAUSIBLE_DOMAIN` and
-`VITE_PLAUSIBLE_SCRIPT_URL` during the frontend build when you want public-site traffic analytics.
+Requirements: Node.js 22+, Python 3.12+, `uv`, and Docker.
 
-## Deployment model
-
-### Frontend: GitHub Pages
-
-The `deploy-pages.yml` workflow builds the Vite application and publishes it to GitHub Pages. Add a GitHub repository variable named `VITE_API_BASE_URL` that points to the deployed API, for example:
-
-```text
-https://api.your-domain.com/api/v1
+```bash
+cp .env.example .env
+make setup
+make secrets
+docker compose up -d db
+make admin
+make seed
 ```
 
-### Backend: container host
+Start the applications in separate terminals:
 
-GitHub Pages is static hosting and cannot run Python. The `backend-image.yml` workflow publishes a Docker image to GitHub Container Registry. Run that image on a container host and configure HTTPS, PostgreSQL, environment variables, and the exact frontend origin.
+```bash
+make dev-api
+make dev-web
+```
 
-For a no-PC deployment using GitHub Pages, Render, and Neon, follow
-[docs/CLOUD_DEPLOYMENT.md](docs/CLOUD_DEPLOYMENT.md). The API container applies migrations, creates or
-updates the configured administrator, and inserts only missing starter projects whenever it starts.
+The frontend runs at `http://localhost:5173`; the API runs at `http://localhost:8000`.
 
-### LinkedIn integration
+## Quality checks
 
-The public site links to Aryan's LinkedIn profile. A real LinkedIn sign-in or share integration must use LinkedIn's approved OAuth/OpenID products and permissions. Automated connection requests are intentionally not implemented.
+```bash
+make lint
+make test
+make build
+```
 
-## Before going public
+GitHub Actions repeats the frontend type/build checks and backend lint/tests on every pull request and
+push to `main`.
 
-- Replace the GitHub placeholder URL in `apps/web/src/data/profile.ts`.
-- Confirm every impact metric and remove confidential company details.
-- Use a custom domain for a stronger professional identity.
-- Set `ENVIRONMENT=production`, strong secrets, HTTPS-only cookies, exact allowed origins, and production PostgreSQL backups.
-- Run `npm audit`, `uv run ruff check .`, `uv run pytest`, and dependency updates before each release.
+## Cloud deployment
 
-See [docs/LEARNING_PATH.md](docs/LEARNING_PATH.md) for the build-and-learn sequence and [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the visual and motion architecture.
+Production uses a private GitHub repository, a Render Static Site, a Render Web Service, and Neon.
+Secrets stay in Render and never belong in Git. Follow [docs/CLOUD_DEPLOYMENT.md](docs/CLOUD_DEPLOYMENT.md)
+for the reproducible setup and required environment variables.
+
+The API container automatically applies migrations, creates or refreshes the configured administrator,
+and inserts only missing starter projects. Existing projects edited through the admin interface are
+preserved across redeployments.
+
+## Documentation
+
+- [Cloud deployment](docs/CLOUD_DEPLOYMENT.md)
+- [Security model](docs/SECURITY.md)
+- [Design and motion system](docs/DESIGN_SYSTEM.md)
+- [Public content checklist](docs/PORTFOLIO_CONTENT.md)
+
+Before publishing professional claims, verify every metric and remove employer-confidential details.
