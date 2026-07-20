@@ -104,11 +104,14 @@ transactional email API instead:
 
 ```text
 BREVO_API_KEY=YOUR_PRIVATE_BREVO_API_KEY
-MAIL_FROM=YOUR_VERIFIED_BREVO_SENDER
+MAIL_FROM=YOUR_VERIFIED_BREVO_SENDER_EMAIL_ONLY
 MAIL_TO=aryantembhekar294@gmail.com
 MAIL_SEND_CONFIRMATION=true
 SMTP_HOST=
 ```
+
+`MAIL_FROM` should normally be only the verified address, such as `name@example.com`. Use
+`ADMIN_NAME` for the sender title. The API also accepts a formatted sender address for compatibility.
 
 Save the variables and redeploy the API. Submit a new contact message and check the admin dashboard:
 the message should move to `sent`. Brevo is preferred automatically when `BREVO_API_KEY` is present;

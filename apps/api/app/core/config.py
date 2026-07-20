@@ -39,7 +39,7 @@ class Settings(BaseSettings):
 
     admin_email: str = "aryantembhekar294@gmail.com"
     admin_password: str = "change-me-now"
-    admin_name: str = "Aryan Tembhekar"
+    admin_name: str = "Aryan Tembhekar | Portfolio"
 
     brevo_api_key: str = ""
     smtp_host: str = ""

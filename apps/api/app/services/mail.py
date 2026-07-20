@@ -67,6 +67,14 @@ class MailService:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
 
+    def _sender(self) -> tuple[str, str]:
+        configured_name, configured_email = parseaddr(self.settings.mail_from)
+        sender_email = configured_email or self.settings.mail_from.strip()
+        sender_name = configured_name or self.settings.admin_name
+        if not sender_email or "@" not in sender_email:
+            raise ValueError("MAIL_FROM must contain a valid Brevo-verified sender email address")
+        return sender_name, sender_email
+
     async def notify_contact(
         self, contact_id: str, name: str, email: str, company: str | None, subject: str, message: str
     ) -> None:
@@ -93,7 +101,7 @@ class MailService:
         reply_href = f"mailto:{escape(safe_email, quote=True)}?subject={quote(f'Re: {safe_subject}')}"
 
         mail = EmailMessage()
-        mail["From"] = formataddr((self.settings.admin_name, self.settings.mail_from))
+        mail["From"] = formataddr(self._sender())
         mail["To"] = self.settings.mail_to
         mail["Reply-To"] = safe_email
         mail["Subject"] = f"[Portfolio] {safe_subject} — {safe_name}"
@@ -151,7 +159,7 @@ class MailService:
         )
 
         mail = EmailMessage()
-        mail["From"] = formataddr((self.settings.admin_name, self.settings.mail_from))
+        mail["From"] = formataddr(self._sender())
         mail["To"] = safe_email
         mail["Reply-To"] = self.settings.mail_to
         mail["Subject"] = f"Message received — {self.settings.admin_name}"
@@ -237,7 +245,13 @@ class MailService:
                     headers=headers,
                     json=self._brevo_payload(mail),
                 )
-                response.raise_for_status()
+                try:
+                    response.raise_for_status()
+                except httpx.HTTPStatusError as exc:
+                    detail = response.text.strip()[:500] or "No response details"
+                    raise RuntimeError(
+                        f"Brevo rejected the email with HTTP {response.status_code}: {detail}"
+                    ) from exc
 
     async def _mark(self, contact_id: str, status: str, error: str | None = None) -> None:
         async with SessionLocal() as session:
