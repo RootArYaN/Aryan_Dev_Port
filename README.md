@@ -12,6 +12,7 @@ flowchart LR
     W -->|HTTPS JSON| A[FastAPI container on Render]
     A -->|TLS| P[(Neon PostgreSQL)]
     A --> E[Encrypted contact records]
+    A -->|HTTPS| M[Brevo transactional mail]
     G[Private GitHub repository] --> C[GitHub Actions checks]
     C --> W
     C --> A
@@ -27,7 +28,7 @@ cloud infrastructure. Free Render services sleep while idle, so the first API re
 - **Data:** Neon PostgreSQL with application-level encryption for contact details
 - **Security:** Argon2 password hashing, signed session cookies, CSRF protection, strict CORS,
   trusted hosts, request limits, security headers, and environment-managed secrets
-- **Delivery:** Render, Docker, GitHub Actions
+- **Delivery:** Render, Docker, GitHub Actions, Brevo HTTPS mail API
 
 ## Product surface
 

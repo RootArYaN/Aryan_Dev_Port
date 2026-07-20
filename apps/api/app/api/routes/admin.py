@@ -64,7 +64,7 @@ async def metrics(_: Admin, db: DbSession, settings: AppSettings) -> dict[str, o
         "lastSevenDays": int(last_seven_days),
         "trend": trend,
         "mail": {
-            "configured": bool(settings.smtp_host),
+            "configured": bool(settings.brevo_api_key or settings.smtp_host),
             "recipient": settings.mail_to,
             "sent": sent,
             "failed": failed,

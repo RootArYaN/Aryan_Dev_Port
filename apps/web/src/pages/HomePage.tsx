@@ -12,10 +12,10 @@ export function HomePage() {
     <PageTransition>
       <Hero />
       <Impact />
+      <CloudDeploymentStory />
       <FlagshipStory />
       <FeaturedWork />
       <JourneyPreview />
-      <CloudDeploymentStory />
       <HomeCTA />
     </PageTransition>
   );

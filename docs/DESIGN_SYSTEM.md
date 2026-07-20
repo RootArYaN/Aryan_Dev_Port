@@ -71,9 +71,10 @@ It remains behind the content, ignores pointer events, and respects reduced-moti
 
 ### 7. Cloud deployment trace
 
-`CloudDeploymentStory.tsx` automatically steps through source, verification, API, database, and edge
-delivery. Visitors can select a stage directly, and reduced-motion preferences disable automatic
-cycling while preserving the complete architecture explanation.
+`CloudDeploymentStory.tsx` sits near the top of the home page and permanently names the live providers:
+Render Static, Render Web Service, Neon PostgreSQL, and Brevo Mail API. It automatically steps through
+the release and request path. Visitors can select a stage directly, and reduced-motion preferences
+disable automatic cycling while preserving the complete architecture explanation.
 
 ## Accessibility rules
 

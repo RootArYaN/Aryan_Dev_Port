@@ -2,15 +2,18 @@ import asyncio
 import logging
 import smtplib
 from email.message import EmailMessage
-from email.utils import formataddr
+from email.utils import formataddr, parseaddr
 from html import escape
 from urllib.parse import quote
+
+import httpx
 
 from app.core.config import Settings
 from app.db.session import SessionLocal
 from app.models.contact import ContactMessage
 
 logger = logging.getLogger(__name__)
+BREVO_EMAIL_URL = "https://api.brevo.com/v3/smtp/email"
 
 
 def _one_line(value: str) -> str:
@@ -67,11 +70,14 @@ class MailService:
     async def notify_contact(
         self, contact_id: str, name: str, email: str, company: str | None, subject: str, message: str
     ) -> None:
-        if not self.settings.smtp_host:
+        if not self.settings.brevo_api_key and not self.settings.smtp_host:
             await self._mark(contact_id, "not_configured")
             return
         try:
-            await asyncio.to_thread(self._send_sync, name, email, company, subject, message)
+            if self.settings.brevo_api_key:
+                await self._send_brevo(name, email, company, subject, message)
+            else:
+                await asyncio.to_thread(self._send_sync, name, email, company, subject, message)
             await self._mark(contact_id, "sent")
         except Exception as exc:  # noqa: BLE001
             logger.exception("Contact notification mail failed")
@@ -192,6 +198,46 @@ class MailService:
             smtp.send_message(host_mail)
             if self.settings.mail_send_confirmation:
                 smtp.send_message(confirmation)
+
+    @staticmethod
+    def _brevo_payload(mail: EmailMessage) -> dict[str, object]:
+        sender_name, sender_email = parseaddr(str(mail["From"]))
+        recipient_name, recipient_email = parseaddr(str(mail["To"]))
+        reply_name, reply_email = parseaddr(str(mail["Reply-To"]))
+        plain = mail.get_body(preferencelist=("plain",))
+        html = mail.get_body(preferencelist=("html",))
+
+        payload: dict[str, object] = {
+            "sender": {"name": sender_name, "email": sender_email},
+            "to": [{"email": recipient_email, "name": recipient_name or recipient_email}],
+            "subject": str(mail["Subject"]),
+            "textContent": plain.get_content() if plain else "",
+            "htmlContent": html.get_content() if html else "",
+        }
+        if reply_email:
+            payload["replyTo"] = {"email": reply_email, "name": reply_name or reply_email}
+        return payload
+
+    async def _send_brevo(
+        self, name: str, email: str, company: str | None, subject: str, message: str
+    ) -> None:
+        messages = [self._host_mail(name, email, company, subject, message)]
+        if self.settings.mail_send_confirmation:
+            messages.append(self._confirmation_mail(name, email, subject))
+
+        headers = {
+            "accept": "application/json",
+            "api-key": self.settings.brevo_api_key,
+            "content-type": "application/json",
+        }
+        async with httpx.AsyncClient(timeout=15) as client:
+            for mail in messages:
+                response = await client.post(
+                    BREVO_EMAIL_URL,
+                    headers=headers,
+                    json=self._brevo_payload(mail),
+                )
+                response.raise_for_status()
 
     async def _mark(self, contact_id: str, status: str, error: str | None = None) -> None:
         async with SessionLocal() as session:

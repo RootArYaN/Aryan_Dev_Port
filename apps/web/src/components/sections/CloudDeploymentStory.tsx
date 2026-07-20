@@ -5,6 +5,7 @@ import {
   Database,
   GitBranch,
   Globe2,
+  MailCheck,
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
@@ -45,8 +46,19 @@ const stages: DeploymentStage[] = [
     trace: ["Frontend type-check passes", "API lint passes", "Backend tests pass"],
   },
   {
+    id: "web",
+    label: "Render Static",
+    title: "Render publishes the React frontend",
+    summary:
+      "Vite creates a static production build that Render distributes over HTTPS while React keeps each route fast and interactive.",
+    icon: Globe2,
+    color: "#60a5fa",
+    tags: ["Render Static", "React", "HTTPS edge"],
+    trace: ["Vite bundle created", "Static assets published", "React routes available"],
+  },
+  {
     id: "api",
-    label: "API",
+    label: "Render API",
     title: "Render builds and starts the API container",
     summary:
       "The Docker image installs locked dependencies, applies Alembic migrations, initializes safe defaults, and starts FastAPI behind HTTPS.",
@@ -57,7 +69,7 @@ const stages: DeploymentStage[] = [
   },
   {
     id: "data",
-    label: "Data",
+    label: "Neon",
     title: "Neon keeps application data durable",
     summary:
       "Managed PostgreSQL stores projects and encrypted contact messages independently from the disposable web container.",
@@ -67,15 +79,15 @@ const stages: DeploymentStage[] = [
     trace: ["TLS connection established", "Contact fields encrypted", "Persistent records committed"],
   },
   {
-    id: "edge",
-    label: "Live",
-    title: "The frontend ships through Render's edge",
+    id: "mail",
+    label: "Brevo Mail",
+    title: "Brevo delivers mail through an HTTPS API",
     summary:
-      "The static React build is delivered globally, calls the HTTPS API, and falls back gracefully while free cloud services wake from idle.",
-    icon: Globe2,
+      "Render's free tier blocks standard SMTP ports, so the API sends contact alerts and confirmations securely through Brevo over HTTPS.",
+    icon: MailCheck,
     color: "#6ee7b7",
-    tags: ["Render Static", "HTTPS", "Cloud hosted"],
-    trace: ["Static assets published", "Browser connects to API", "Portfolio available worldwide"],
+    tags: ["Brevo API", "Port 443", "Transactional email"],
+    trace: ["Contact stored first", "HTTPS mail request accepted", "Delivery status recorded"],
   },
 ];
 
@@ -111,9 +123,16 @@ export function CloudDeploymentStory() {
             </h2>
           </div>
           <p>
-            Follow a release from a private GitHub commit to the React frontend, FastAPI container,
-            and managed PostgreSQL database.
+            Follow a release through Render's frontend and API services, Neon PostgreSQL, and Brevo's
+            HTTPS mail delivery.
           </p>
+        </div>
+
+        <div className="cloud-deploy__providers" aria-label="Live cloud providers">
+          <span><Globe2 size={14} /> Render Static</span>
+          <span><Container size={14} /> Render Web Service</span>
+          <span><Database size={14} /> Neon PostgreSQL</span>
+          <span><MailCheck size={14} /> Brevo Mail API</span>
         </div>
 
         <div

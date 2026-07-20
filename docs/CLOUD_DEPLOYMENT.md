@@ -9,6 +9,7 @@ Private GitHub repository
   └─ GitHub Actions → type checks, build, lint, and tests
 
 FastAPI → Neon PostgreSQL over TLS
+FastAPI → Brevo transactional mail over HTTPS
 ```
 
 ## 1. Database
@@ -91,12 +92,34 @@ ALLOWED_ORIGINS=https://YOUR-WEB.onrender.com
 
 Save and redeploy the API. Test the public project request, contact submission, and admin login.
 
+## 5. Enable email on Render free
+
+Render free web services block outbound SMTP ports, including Gmail's port `587`. Use Brevo's HTTPS
+transactional email API instead:
+
+1. Create a Brevo account.
+2. In Brevo, add and verify the email address that will send portfolio mail.
+3. Create a Brevo API key under the SMTP & API settings.
+4. Add these environment variables to the Render API service:
+
+```text
+BREVO_API_KEY=YOUR_PRIVATE_BREVO_API_KEY
+MAIL_FROM=YOUR_VERIFIED_BREVO_SENDER
+MAIL_TO=aryantembhekar294@gmail.com
+MAIL_SEND_CONFIRMATION=true
+SMTP_HOST=
+```
+
+Save the variables and redeploy the API. Submit a new contact message and check the admin dashboard:
+the message should move to `sent`. Brevo is preferred automatically when `BREVO_API_KEY` is present;
+SMTP remains available for local development or a paid host.
+
 ## Secrets and operations
 
 - Never commit `.env`, database URLs, passwords, encryption keys, or provider credentials.
 - Rotate any secret shared in a message, screenshot, log, or commit.
 - Free Render web services sleep after inactivity; a cold request can take about a minute.
-- Free Render services block standard SMTP ports. Contact records still persist in Neon; add an HTTPS
-  email provider later if notifications are required.
+- Contact records are committed before email is attempted, so a provider failure never loses the
+  enquiry. The dashboard records `sent`, `failed`, or `not_configured` delivery state.
 - Cross-site admin cookies can be blocked by strict browsers. A custom domain using `www.example.com`
   and `api.example.com` provides the cleanest production authentication setup.

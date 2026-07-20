@@ -41,6 +41,7 @@ class Settings(BaseSettings):
     admin_password: str = "change-me-now"
     admin_name: str = "Aryan Tembhekar"
 
+    brevo_api_key: str = ""
     smtp_host: str = ""
     smtp_port: int = 587
     smtp_username: str = ""

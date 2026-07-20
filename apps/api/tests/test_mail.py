@@ -1,4 +1,6 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from app.core.config import Settings
 from app.services.mail import MailService
@@ -66,3 +68,37 @@ def test_contact_mail_escapes_visitor_html() -> None:
     assert "<script>" not in html_content
     assert "&lt;script&gt;" in html_content
     assert "&lt;b&gt;Example&lt;/b&gt;" in html_content
+
+
+@pytest.mark.asyncio
+async def test_contact_mail_uses_brevo_https_api() -> None:
+    settings = Settings(
+        environment="test",
+        brevo_api_key="test-brevo-key",  # noqa: S106 - test-only API value
+        mail_from="portfolio@example.com",
+        mail_to="owner@example.com",
+        mail_send_confirmation=True,
+    )
+    response = MagicMock()
+    client = AsyncMock()
+    client.post.return_value = response
+    context = AsyncMock()
+    context.__aenter__.return_value = client
+
+    with patch("app.services.mail.httpx.AsyncClient", return_value=context):
+        await MailService(settings)._send_brevo(
+            "Visitor",
+            "visitor@example.com",
+            "Example Co",
+            "Project question",
+            "I would like to discuss a data project.",
+        )
+
+    assert client.post.await_count == 2
+    host_call, confirmation_call = client.post.await_args_list
+    assert host_call.args[0] == "https://api.brevo.com/v3/smtp/email"
+    assert host_call.kwargs["headers"]["api-key"] == "test-brevo-key"
+    assert host_call.kwargs["json"]["to"][0]["email"] == "owner@example.com"
+    assert host_call.kwargs["json"]["replyTo"]["email"] == "visitor@example.com"
+    assert confirmation_call.kwargs["json"]["to"][0]["email"] == "visitor@example.com"
+    assert response.raise_for_status.call_count == 2
