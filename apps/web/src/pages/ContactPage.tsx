@@ -34,14 +34,14 @@ export function ContactPage() {
                   rel={channel.href.startsWith("http") ? "noreferrer" : undefined}
                   className="adaptive-surface group flex items-center justify-between gap-5 rounded-[1.35rem] border p-5"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                     <span className="grid h-11 w-11 place-items-center text-cyan-200"><channel.icon size={18} /></span>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs uppercase tracking-[0.18em] text-slate-600">{channel.label}</p>
-                      <p className="mt-1 text-sm text-slate-300">{channel.value}</p>
+                      <p className="mt-1 break-words text-sm text-slate-300">{channel.value}</p>
                     </div>
                   </div>
-                  <ArrowUpRight size={17} className="text-slate-600 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-200" />
+                  <ArrowUpRight size={17} className="shrink-0 text-slate-600 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-200" />
                 </a>
               ))}
             </div>

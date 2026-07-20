@@ -15,7 +15,7 @@ export function ResumePreview() {
         <button
           type="button"
           data-testid="resume-link"
-          className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-white/[0.11] bg-white/[0.035] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.07]"
+          className="inline-flex min-h-12 w-full items-center justify-between gap-2 rounded-xl border border-white/[0.11] bg-white/[0.035] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.07] sm:w-auto sm:justify-start"
         >
           Preview resume <FileText size={17} />
         </button>

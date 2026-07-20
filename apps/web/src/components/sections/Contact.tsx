@@ -42,8 +42,8 @@ export function Contact() {
   };
 
   return (
-    <div className="rounded-[1.75rem] border border-transparent p-1 transition focus-within:border-cyan-200/25 focus-within:bg-cyan-200/[0.018]">
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5 p-6 sm:grid-cols-2 sm:p-9" noValidate>
+    <div className="rounded-[1.5rem] border border-transparent transition focus-within:border-cyan-200/25 focus-within:bg-cyan-200/[0.018] sm:rounded-[1.75rem] sm:p-1">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5 p-4 sm:grid-cols-2 sm:p-9" noValidate>
         <label className="field-label">
           Name
           <Input className="mt-2" placeholder="Your name" autoComplete="name" {...register("name")} />
@@ -70,7 +70,7 @@ export function Contact() {
         </label>
         <input className="hidden" tabIndex={-1} autoComplete="off" {...register("website")} />
         <div className="flex flex-wrap items-center gap-4 pt-2 sm:col-span-2">
-          <Button type="submit" disabled={isSubmitting} className="gap-2">
+          <Button type="submit" disabled={isSubmitting} className="w-full gap-2 sm:w-auto">
             {isSubmitting ? <><Loader2 className="animate-spin" size={17} />Sending</> : <>Send message <Send size={16} /></>}
           </Button>
           {status === "sent" && <span className="flex items-center gap-2 text-sm text-emerald-300"><CheckCircle2 size={17} />Message received.</span>}

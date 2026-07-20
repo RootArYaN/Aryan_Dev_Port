@@ -130,9 +130,9 @@ export function CloudDeploymentStory() {
 
         <div className="cloud-deploy__providers" aria-label="Live cloud providers">
           <span><Globe2 size={14} /> Render Static</span>
-          <span><Container size={14} /> Render Web Service</span>
-          <span><Database size={14} /> Neon PostgreSQL</span>
-          <span><MailCheck size={14} /> Brevo Mail API</span>
+          <span><Container size={14} /> Render API</span>
+          <span><Database size={14} /> Neon Postgres</span>
+          <span><MailCheck size={14} /> Brevo API</span>
         </div>
 
         <div
