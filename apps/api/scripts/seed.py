@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 
 from sqlalchemy import select
@@ -54,20 +55,33 @@ PROJECTS = [
 ]
 
 
-async def main() -> None:
+async def main(*, missing_only: bool = False) -> None:
     async with engine.begin() as connection:
         await connection.run_sync(Base.metadata.create_all)
     async with SessionLocal() as session:
+        created = 0
+        updated = 0
         for payload in PROJECTS:
             existing = await session.scalar(select(Project).where(Project.slug == payload["slug"]))
             if existing:
+                if missing_only:
+                    continue
                 for key, value in payload.items():
                     setattr(existing, key, value)
+                updated += 1
             else:
                 session.add(Project(**payload))
+                created += 1
         await session.commit()
-    print(f"Seeded {len(PROJECTS)} portfolio projects")
+    print(f"Project seed complete: created={created}, updated={updated}")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    parser = argparse.ArgumentParser(description="Seed the portfolio project catalogue")
+    parser.add_argument(
+        "--missing-only",
+        action="store_true",
+        help="Create missing projects without overwriting projects edited through the admin interface",
+    )
+    args = parser.parse_args()
+    asyncio.run(main(missing_only=args.missing_only))

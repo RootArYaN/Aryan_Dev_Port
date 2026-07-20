@@ -130,6 +130,10 @@ https://api.your-domain.com/api/v1
 
 GitHub Pages is static hosting and cannot run Python. The `backend-image.yml` workflow publishes a Docker image to GitHub Container Registry. Run that image on a container host and configure HTTPS, PostgreSQL, environment variables, and the exact frontend origin.
 
+For a no-PC deployment using GitHub Pages, Render, and Neon, follow
+[docs/CLOUD_DEPLOYMENT.md](docs/CLOUD_DEPLOYMENT.md). The API container applies migrations, creates or
+updates the configured administrator, and inserts only missing starter projects whenever it starts.
+
 ### LinkedIn integration
 
 The public site links to Aryan's LinkedIn profile. A real LinkedIn sign-in or share integration must use LinkedIn's approved OAuth/OpenID products and permissions. Automated connection requests are intentionally not implemented.
