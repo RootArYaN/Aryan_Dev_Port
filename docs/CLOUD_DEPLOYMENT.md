@@ -11,12 +11,17 @@ shared accidentally, reset the database role password before deploying.
 
 ## 1. Create the Neon database
 
-Create a Neon PostgreSQL project in the Frankfurt region and copy its connection string. Change only
-the URL scheme from `postgresql://` to `postgresql+asyncpg://` for this application:
+Create a Neon PostgreSQL project in the Frankfurt region and copy its connection string. Change the
+URL scheme from `postgresql://` to `postgresql+asyncpg://`, and change `sslmode=require` to
+`ssl=require` for this application:
 
 ```text
-postgresql+asyncpg://USER:PASSWORD@HOST/DATABASE?sslmode=require
+postgresql+asyncpg://USER:PASSWORD@HOST/DATABASE?ssl=require
 ```
+
+Neon normally supplies `sslmode=require`. Because this application uses SQLAlchemy's `asyncpg`
+dialect, rename that query parameter to `ssl=require`. If Neon also adds
+`channel_binding=require`, remove that parameter because it is not accepted by this driver path.
 
 Keep this value ready for the Render setup; do not put it in a repository file.
 
